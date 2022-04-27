@@ -67,23 +67,7 @@ export default class ShipperStore {
         this.loadingInitial = state;
     }
 
-    // selectActivity = (id: string) => {
-    //     this.selectedActivity = this.activityRegistry.get(id);
-    //     // this.selectedActivity = this.activities.find(a => a.id === id);
-    // }
-
-    // cancelSelectedActivity = () => {
-    //     this.selectedActivity = undefined;
-    // }
-
-    // openForm = (id?: string) => {
-    //     id ? this.selectActivity(id) : this.cancelSelectedActivity();
-    //     this.editMode = true;
-    // }
-
-    // closeForm = () => {
-    //     this.editMode = false;
-    // }
+    
 
     createShipper = async (shipper: ShipperFormValues) => {
         try {
@@ -105,7 +89,6 @@ export default class ShipperStore {
             runInAction(() => {
                 if(shipper.id) {
                     let updatedShipper = {...this.getShippers(shipper.id), ...shipper};
-                    // this.activities = [...this.activities.filter(a => a.id !== activity.id), activity];
                     this.shipperRegistery.set(shipper.id, updatedShipper as Shipper);
                     this.selectedShippers = updatedShipper as Shipper;
                 }
