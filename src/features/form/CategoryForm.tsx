@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite';
 import React, { useState,useEffect} from 'react';
 import { useParams } from 'react-router';
 import * as Yup from 'yup';
-import { v4 as uuid } from 'uuid';
 import { useStore } from '../../app/stores/store';
 import { Formik, Form, Field} from 'formik';
 import { CategoryCreateFormValues, CategoryFormValues } from '../../app/models/category';
