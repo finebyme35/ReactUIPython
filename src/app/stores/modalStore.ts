@@ -17,6 +17,7 @@ export default class ModalStore {
     }
 
     openModal = (content: JSX.Element) => {
+        
         this.modal.open = true;
         this.modal.body =content;
     }

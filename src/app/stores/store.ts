@@ -1,14 +1,13 @@
 import { createContext, useContext } from "react";
 import ModalStore from "./modalStore";
-import ShipperStore from "./shipperStore";
-
+import CategoryStore from "./categoryStore";
 interface Store {
-    shipperStore: ShipperStore;
+    categoryStore: CategoryStore;
     modalStore: ModalStore;
 }
 
 export const store: Store = {
-    shipperStore: new ShipperStore(),
+    categoryStore: new CategoryStore(),
     modalStore: new ModalStore()
 }
 
