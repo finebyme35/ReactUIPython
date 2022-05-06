@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { Route } from 'react-router';
 import { ToastContainer } from 'react-toastify';
-import ShipperDashboard from '../../features/shipper/dashboard/CategoryDashboard';
+import ShipperDashboard from '../../features/category/dashboard/CategoryDashboard';
 import './style.css'
 
 function App() {
