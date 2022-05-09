@@ -4,19 +4,17 @@ import React, { Fragment, useEffect } from 'react';
 import ModalContainer from '../../../app/common/modals/ModalContainer';
 
 import { useStore } from '../../../app/stores/store';
-import ShipperForm from '../../form/CategoryForm';
+import CategoryForm from '../../form/CategoryForm';
+import CategoryListItem from './CategoryListItem';
 
 
-
-export default observer(function ShipperList(){
+export default observer(function CategoryList({open}: any){
     const {categoryStore, modalStore} = useStore();
     const {openModal} = modalStore;
     const {groupedCategory} = categoryStore;
-    useEffect(()=> {
-    }, [groupedCategory])
     return (
     <Fragment>
-        <Button variant="contained" color="primary" onClick={() => openModal(<ShipperForm />)} style={{margin: "1rem", float: "right", marginRight: "5rem", marginBottom: "0.1rem"}}>Add</Button>
+        <Button variant="contained" color="primary" onClick={() => openModal(<CategoryForm />)} style={{margin: "1rem", float: "right", marginRight: "5rem", marginBottom: "0.1rem"}}>Add</Button>
         <ModalContainer />
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -31,22 +29,7 @@ export default observer(function ShipperList(){
             <TableBody>
             {groupedCategory.map(([group, category]) => {
                         return (<Fragment key={group}>
-                        <TableRow
-                                
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                {category.id}
-                                </TableCell>
-                                <TableCell align="center">
-                                {category.category_name}
-                                </TableCell>
-                                <TableCell align="center" >
-                                <Button variant="contained" color="warning" style={{marginRight: 5}}>Edit</Button>
-                                <Button variant="contained" color="error" >Delete</Button>
-                                
-                                </TableCell>
-                            </TableRow>
+                            <CategoryListItem key={category.id} category={category}/>
                         </Fragment>
                         )
                     })}

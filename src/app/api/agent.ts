@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-import {Category, CategoryCreateFormValues, CategoryFormValues} from '../models/category'
+import {Category, CategoryFormValues} from '../models/category'
 // const sleep = (delay: number) => {
 //     return new Promise((resolve) =>{
 //         setTimeout(resolve, delay)
@@ -56,10 +56,10 @@ const requests = {
 
 
 const Categorys = {
-    list: () => requests.get<Category[]>('category/'),
+    list: () => requests.get<Category[]>('/category/'),
     details: (id: number) => requests.get<Category>(`/category/${id}`),
-    create: (shipper: CategoryCreateFormValues) => requests.post<void>('/category/creates/', shipper),
-    update: (shipper: CategoryFormValues) => requests.put<void>(`/category/${shipper.id}`, shipper),
+    create: (category: CategoryFormValues) => requests.post<void>('/category/creates/', category),
+    update: (category: CategoryFormValues) => requests.put<void>(`/category/${category.id}`, category),
     delete: (id: number) => requests.del<void>(`/category/${id}`),
 }
 

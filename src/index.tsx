@@ -5,7 +5,6 @@ import { StoreContext, store } from './app/stores/store';
 import { BrowserRouter as Router } from 'react-router-dom';
 import React from 'react';
 
-
 const container = document.getElementById('root');
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 root.render(

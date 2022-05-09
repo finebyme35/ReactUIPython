@@ -5,8 +5,8 @@ export interface Category {
   }
 
   export class Category implements Category {
-    constructor(init?: CategoryFormValues, initCreate?: CategoryCreateFormValues){
-      Object.assign(this, init, initCreate);
+    constructor(init?: CategoryFormValues){
+      Object.assign(this, init);
     }
   }
 
@@ -21,13 +21,6 @@ export interface Category {
     }
   }
 
-  export class  CategoryCreateFormValues {
-    category_name: string = '';
-    constructor(category?: CategoryFormValues){
-      if(category){
-        this.category_name = category.category_name
-      }
-    }
-  }
+ 
 
   

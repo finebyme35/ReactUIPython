@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import * as Yup from 'yup';
 import { useStore } from '../../app/stores/store';
 import { Formik, Form, Field} from 'formik';
-import { CategoryCreateFormValues, CategoryFormValues } from '../../app/models/category';
+import { CategoryFormValues } from '../../app/models/category';
 import {  Button, TextField } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -24,18 +24,18 @@ const style = {
   };
 
 export default observer(function CategoryForm(){
-    let navigate = useNavigate()
     const {categoryStore, modalStore} = useStore();
-    const {createCategory, updateCategory, loadCategory} = categoryStore;
+    const {createCategory, updateCategory, loadCategory, loadCategorys} = categoryStore;
     const {closeModal} = modalStore
     const {id} = useParams<{id: string}>();
-    const [category, setCategory] = useState<CategoryFormValues>(new CategoryFormValues());
+    const [category, setCategory] = useState<CategoryFormValues>(() => new CategoryFormValues());
     const validationSchema = Yup.object({
         category_name: Yup.string().required('Kategori İsmi Gereklidir.'),
     })
 
     useEffect(() => {
         if(id) loadCategory(Number(id)).then(category => setCategory(new CategoryFormValues(category)))
+        
     },[id, loadCategory]);
     
 
@@ -43,12 +43,14 @@ export default observer(function CategoryForm(){
     function handleFormSubmit(category: CategoryFormValues) {
         if(!category.id){
 
-            let newCategory: CategoryCreateFormValues = {
-                category_name: category.category_name
+            let newCategory = {
+                ...category
             };
             createCategory(newCategory).then(() => {
                 closeModal()
-                navigate('/')
+                // window.history.pushState(newCategory, '', `/category/${newCategory.id}`)
+                
+                                              
             });
             
         } else {

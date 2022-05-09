@@ -1,4 +1,4 @@
-import {  makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Category, CategoryFormValues } from "../models/category";
 
@@ -16,21 +16,25 @@ export default class CategoryStore {
     
     get getCategoryLists(){
         
-        return Array.from(this.categoryRegistery.values()).sort((a, b) => Number(b.id) - Number(a.id))
+        return Array.from(this.categoryRegistery.values())
     }
-    get groupedCategory() {        
-        return Object.entries(this.getCategoryLists)
+    get groupedCategory() {    
+        return  Object.entries(this.getCategoryLists)
+
     }
+    
 
     loadCategorys =  async () => {
         this.loading = true;
 
         try {
-            const Category = await agent.Categorys.list();
-                Category.forEach(category => {
-                    this.setCategory(category)
-
-                })
+            const categories = await agent.Categorys.list();
+            
+            categories.forEach(category => {
+                this.setCategory(category)
+                
+                
+            })
             this.setLoadingInitial(false);
         }
         catch (error) {
@@ -68,6 +72,7 @@ export default class CategoryStore {
         this.categoryRegistery.set(category.id, category);
     }
     private getCategory = (id: number) => {
+        
         return this.categoryRegistery.get(id);
     }
 
@@ -79,12 +84,13 @@ export default class CategoryStore {
 
     createCategory = async (category: CategoryFormValues) => {
         try {            
-            await agent.Categorys.create(category);
-            const newcategory = new Category(category);
-            this.setCategory(newcategory);
-            runInAction(() => {
-                this.selectedCategory = newcategory;
-            })
+            await agent.Categorys.create(category).then(res => {
+                const newcategory = new Category(res!);
+                this.setCategory(newcategory);
+                runInAction(() => {
+                    this.selectedCategory = newcategory;
+                })
+            });
         } catch (error) {
             console.log(error);
         }
