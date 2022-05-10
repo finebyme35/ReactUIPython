@@ -6,7 +6,7 @@ import { useStore } from '../../app/stores/store';
 import { Formik, Form, Field} from 'formik';
 import { CategoryFormValues } from '../../app/models/category';
 import {  Button, TextField } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -25,8 +25,9 @@ const style = {
 
 export default observer(function CategoryForm(){
     const {categoryStore, modalStore} = useStore();
-    const {createCategory, updateCategory, loadCategory, loadCategorys} = categoryStore;
-    const {closeModal} = modalStore
+    let navigate = useNavigate();
+    const {createCategory, updateCategory, loadCategory} = categoryStore;
+    const {closeModal,modal} = modalStore
     const {id} = useParams<{id: string}>();
     const [category, setCategory] = useState<CategoryFormValues>(() => new CategoryFormValues());
     const validationSchema = Yup.object({
@@ -34,29 +35,36 @@ export default observer(function CategoryForm(){
     })
 
     useEffect(() => {
+        
         if(id) loadCategory(Number(id)).then(category => setCategory(new CategoryFormValues(category)))
         
+        
+        if(modal.open == true){
+            navigate('/')
+        }
     },[id, loadCategory]);
     
 
 
-    function handleFormSubmit(category: CategoryFormValues) {
+    async function handleFormSubmit(category: CategoryFormValues) {
         if(!category.id){
-
             let newCategory = {
                 ...category
             };
-            createCategory(newCategory).then(() => {
+            await createCategory(newCategory).then(() => {
                 closeModal()
-                // window.history.pushState(newCategory, '', `/category/${newCategory.id}`)
                 
-                                              
+                // window.history.pushState(newCategory, '', `/category/${newCategory.id}`)                          
+            });
+
+        } else {
+            await updateCategory(category).then(() => {
+                closeModal()
+                navigate('/')
             });
             
-        } else {
-            updateCategory(category).then(() => `/category/${category.id}`);
+
         }
-        
     }
 
 
@@ -70,8 +78,7 @@ export default observer(function CategoryForm(){
             
             }>
             {({ handleSubmit, isSubmitting, isValid, dirty}) => (
-                    <Form 
-
+                 <Form 
                     noValidate
                     autoComplete="off" onSubmit={handleSubmit}>
                          <Field id="outlined-basic" name='category_name' label="Kategori İsmi" variant="outlined" />

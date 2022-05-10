@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { Route } from 'react-router';
+import { Outlet, Route } from 'react-router';
 import { Routes } from 'react-router-dom';
 import CategoryDashboard from '../../features/category/dashboard/CategoryDashboard';
 
@@ -13,7 +13,7 @@ function App() {
     <>
     <Routes>
       <Route path='/' element={<CategoryDashboard />} >
-
+          <Route path='/category/:id/' element={<Outlet />} />
       </Route>
       <Route  path='/category/creates/' element={<CategoryForm />} />
 

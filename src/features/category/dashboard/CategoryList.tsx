@@ -1,6 +1,6 @@
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import ModalContainer from '../../../app/common/modals/ModalContainer';
 
 import { useStore } from '../../../app/stores/store';
@@ -8,7 +8,7 @@ import CategoryForm from '../../form/CategoryForm';
 import CategoryListItem from './CategoryListItem';
 
 
-export default observer(function CategoryList({open}: any){
+export default observer(function CategoryList(){
     const {categoryStore, modalStore} = useStore();
     const {openModal} = modalStore;
     const {groupedCategory} = categoryStore;
